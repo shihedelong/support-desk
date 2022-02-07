@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { useState, useEffect } from 'react'
 import { FaUser } from 'react-icons/fa'
 import { toast } from 'react-toastify'
@@ -68,7 +68,7 @@ function Register() {
     <>
       <section className='heading'>
         <h1>
-          <FaUser /> Register {user}
+          <FaUser /> Register
         </h1>
         <p>Please create an account</p>
       </section>
