@@ -77,6 +77,28 @@ export const getTicket = createAsyncThunk(
   }
 )
 
+// Closeticket
+export const closeTicket = createAsyncThunk(
+  'tickets/close',
+  // ticket from the form
+  // thunkAPI, this object actually has on it a method called getState, and we can get anything else from any other state we want, like user and token
+  async (ticketId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().auth.user.token
+      return await ticketService.closeTicket(ticketId, token)
+    } catch (error) {
+      const message =
+        (error.response &&
+          error.response.data &&
+          error.response.data.message) ||
+        error.message ||
+        error.toString()
+
+      return thunkAPI.rejectWithValue(message)
+    }
+  }
+)
+
 export const ticketSlice = createSlice({
   name: 'ticket',
   initialState,
@@ -122,6 +144,13 @@ export const ticketSlice = createSlice({
       state.isLoaidng = false
       state.isError = true
       state.message = action.payload
+    })
+
+    builder.addCase(closeTicket.fulfilled, (state, action) => {
+      state.isLoaidng = false
+      state.tickets.map((ticket) =>
+        ticket._id === action.payload._id ? (ticket.status = 'closed') : ticket
+      )
     })
   },
 })
