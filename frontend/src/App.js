@@ -20,6 +20,8 @@ function App() {
             <Route path='/' element={<Home />}></Route>
             <Route path='/login' element={<Login />}></Route>
             <Route path='/register' element={<Register />}></Route>
+            {/* create private route, wrap real route with PrivateRoute, and url
+            is same */}
             <Route path='/new-ticket' element={<PrivateRoute />}>
               <Route path='/new-ticket' element={<NewTicket />}></Route>
             </Route>
